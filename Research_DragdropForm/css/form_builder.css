@@ -1,0 +1,14 @@
+.form-builder{
+    width: 100%;
+    min-height: 200px;
+    padding-bottom: 20px;
+    position: absolute;
+}
+
+.placeholder-highlight {
+    width: 100%;
+    background-color: burlywood;
+    border: 1px dashed #666;
+    margin-bottom: 5px;
+
+}
