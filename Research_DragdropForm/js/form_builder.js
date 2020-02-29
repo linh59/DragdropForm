@@ -1,17 +1,4 @@
 $(document).ready(function () {
-    // $("#timetable .items").sortable({
-    //     connectWith: "ul"   
-    // });
-
-    // $("ul[id^='available'] li").draggable({
-    //     helper: function () {
-    //         return getTextFieldHTML();
-    //     },
-    //     connectToSortable: ".items"
-    // });
-
-    // $( "#timetable .items" ).disableSelection();
-
 
     $(".form-builder").sortable({
         connectWith: ".form-builder"  ,
@@ -24,48 +11,60 @@ $(document).ready(function () {
         }
     });
 
-    $(".components-nav .component-text").draggable({
-        helper: function () {
-            return getTextFieldHTML();
+    var components = [
+        {
+            type: 'text',
+            template: '<div>'
+                        +'<div class="form-group">'
+                        + '<label for="comment">Comment:</label>'
+                        +    '<input type="text" name="label_52879" class="form-control form_input_label" value="Label" >'
+                        + '</div>'
+                        +'</div>',
         },
+        {
+            type: 'textarea',
+            template: '<div>'
+            +'<div class="form-group">'
+            +'<label for="comment">Comment:</label>'
+            +' <textarea class="form-control" rows="5" id="comment"></textarea>            '
+            + '</div>'
+            +'</div>',
+        }
+    ]
+
+
+
+    
+
+    $(".components-nav .component").draggable({
+        helper: function () {
+            var field = generateField();
+            var html = `<button type="button" class="btn btn-primary btn-sm remove_bal_field pull-right" data-field="` + field + `">X</button>`;
+            return $('<div>').addClass('li_' + field + ' form_builder_field').html(html);
+    
+        },
+        
         connectToSortable: ".form-builder",
+       
+        start: function (event, ui) {
+            
+            $.each(components, function(i, e) {
+                var typeComponent = "component-"+ e.type;
+                if(typeComponent === event.target.id){
+                    return ui.helper.append(e.template);
+                }
+              });
+
+        },
         stop: function(event, ui) {
-            var pos = ui.helper.position(); // just get pos.top and pos.left
+            //var pos = ui.helper.position(); // just get pos.top and pos.left
         }
     });
 
-    $(".components-nav .component-textarea").draggable({
-        helper: function () {
-            return getTextAreaFieldHTML();
-        },
-        connectToSortable: ".form-builder"
-    });
+
 
     $( ".form-builder" ).disableSelection();
 
-    function getTextFieldHTML() {
-        var field = generateField();
-        var html = `<div>
-                        <button type="button" class="btn btn-primary btn-sm remove_bal_field pull-right" data-field="` + field + `">X</button>
-                        <div class="form-group">
-                            <label for="comment">Comment:</label>
-                            <input type="text" name="label_52879" class="form-control form_input_label" value="Label" data-field="` + field + `">
-                        </div>
-                    </div>`;
-        return $('<div>').addClass('li_' + field + ' form_builder_field').html(html);
-    }
-
-    function getTextAreaFieldHTML() {
-        var field = generateField();
-        var html = `<div>
-                        <button type="button" class="btn btn-primary btn-sm remove_bal_field pull-right" data-field="` + field + `">X</button>
-                        <div class="form-group">
-                            <label for="comment">Comment:</label>
-                            <textarea class="form-control" rows="5" id="comment"></textarea>
-                        </div>
-                    </div>`;
-        return $('<div>').addClass('li_' + field + ' form_builder_field').html(html);
-    }
 
     function generateField() {
         return Math.floor(Math.random() * (100000 - 1 + 1) + 57);
@@ -82,31 +81,7 @@ $(document).ready(function () {
     });
 
     function addtoJson(){
-        // var images = ["A", "B", "C"]
-        // console.log(images);
-        // src = [];
-        // data = {}
-        // for (var i = 0; i < images.length; i++) {
-        //     data = {
-        //         src: images[i] 
-        //     };
-        //     // Here data is an object with 1 key only.
-
-        //     src.push(data);
-        // }
-        //     // Here - after the loop - the src variable will contain all of the values that you want.
-        //     console.log(src.data[1]);
-
-        var map = { };
-
-        $('.test').children().each(function(_, node) {
-           
-            //map[ _ ] = { };
-            map[ _ ][ node.nodeName ] = node.textContent;
-            console.log(node.nodeName);
-        });
-
-        console.log(map);
+     
         
     }
 
