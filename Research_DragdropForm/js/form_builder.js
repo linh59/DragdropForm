@@ -1,5 +1,13 @@
 $(document).ready(function () {
 
+    $('th').click(function(){
+        var col = $(this).prevAll().length;
+        console.log(col);
+        var headerObj = $(this).parents('table').find('td').eq(col);
+        // A quick test!
+        console.log("My cell td is called: " + headerObj.text());
+        });
+
     $(".form-builder").sortable({
         connectWith: ".form-builder"  ,
         placeholder: "placeholder-highlight" ,
@@ -54,9 +62,19 @@ $(document).ready(function () {
                     return ui.helper.append(e.template);
                 }
               });
+              
+
+        
 
         },
         stop: function(event, ui) {
+            console.log(ui.helper.parent());
+            var col = ui.helper.parent().prevAll().length;
+              
+              var headerObj = ui.helper.parent().parents('table').find('td').eq(col);
+              return headerObj.append("<div>Hello</div>");
+              // A quick test!
+              console.log("My cell td is called: " + headerObj.text());
             //var pos = ui.helper.position(); // just get pos.top and pos.left
         }
     });
